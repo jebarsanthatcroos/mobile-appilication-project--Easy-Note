@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.project.easynotes.viewmodel.NotesViewModel
 import com.project.easynotes.viewmodel.SortOrder
@@ -28,7 +29,12 @@ fun SettingsScreen(
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.Default.ArrowBack, "Back")
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
         }
     ) { padding ->
@@ -41,6 +47,7 @@ fun SettingsScreen(
             Text(
                 text = "Appearance",
                 style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             )
 
@@ -51,7 +58,14 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Dark Mode")
+                Column {
+                    Text("Dark Mode", style = MaterialTheme.typography.bodyLarge)
+                    Text(
+                        "Toggle dark theme",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
                 Switch(
                     checked = uiState.isDarkMode,
                     onCheckedChange = { viewModel.toggleDarkMode() }
@@ -63,6 +77,7 @@ fun SettingsScreen(
             Text(
                 text = "Sorting",
                 style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             )
 
@@ -80,11 +95,9 @@ fun SettingsScreen(
                     },
                     onValueChange = {},
                     readOnly = true,
-                    label = { Text("Sort by") },
+                    label = { Text("Sort notes by") },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedSort) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .menuAnchor()
+                    modifier = Modifier.fillMaxWidth().menuAnchor()
                 )
 
                 ExposedDropdownMenu(
@@ -118,8 +131,36 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             Text(
+                text = "Data & Backup",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedButton(
+                onClick = { /* Implement backup */ },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Backup to Cloud")
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedButton(
+                onClick = { /* Implement restore */ },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Restore from Cloud")
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Text(
                 text = "About",
                 style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             )
 
@@ -127,13 +168,22 @@ fun SettingsScreen(
 
             Text(
                 text = "Easy Notes v1.0",
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "A simple and elegant note-taking app",
+                text = "A beautiful and simple note-taking app with pastel themes",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "© 2025 Easy Notes. All rights reserved.",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

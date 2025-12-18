@@ -1,3 +1,4 @@
+// ui/navigation/NavGraph.kt
 package com.project.easynotes.ui.navigation
 
 import androidx.compose.runtime.Composable
@@ -7,7 +8,12 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.project.easynotes.ui.screens.*
+import com.project.easynotes.ui.screens.NotesListScreen
+import com.project.easynotes.ui.screens.CreateEditNoteScreen
+import com.project.easynotes.ui.screens.NoteDetailsScreen
+import com.project.easynotes.ui.screens.CalendarScreen
+import com.project.easynotes.ui.screens.TemplatesScreen
+import com.project.easynotes.ui.screens.SettingsScreen
 import com.project.easynotes.viewmodel.NotesViewModel
 
 sealed class Screen(val route: String) {
@@ -19,6 +25,8 @@ sealed class Screen(val route: String) {
     object NoteDetails : Screen("note_details/{noteId}") {
         fun createRoute(noteId: Int) = "note_details/$noteId"
     }
+    object Calendar : Screen("calendar")
+    object Templates : Screen("templates")
     object Settings : Screen("settings")
 }
 
@@ -38,6 +46,8 @@ fun NavGraph(
                 onNavigateToDetails = { noteId ->
                     navController.navigate(Screen.NoteDetails.createRoute(noteId))
                 },
+                onNavigateToCalendar = { navController.navigate(Screen.Calendar.route) },
+                onNavigateToTemplates = { navController.navigate(Screen.Templates.route) },
                 onNavigateToSettings = { navController.navigate(Screen.Settings.route) }
             )
         }
@@ -72,6 +82,24 @@ fun NavGraph(
                 noteId = noteId,
                 onNavigateBack = { navController.popBackStack() },
                 onNavigateToEdit = { navController.navigate(Screen.EditNote.createRoute(noteId)) }
+            )
+        }
+
+        composable(Screen.Calendar.route) {
+            CalendarScreen(
+                viewModel = viewModel,
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToNote = { noteId ->
+                    navController.navigate(Screen.NoteDetails.createRoute(noteId))
+                }
+            )
+        }
+
+        composable(Screen.Templates.route) {
+            TemplatesScreen(
+                viewModel = viewModel,
+                onNavigateBack = { navController.popBackStack() },
+                onCreateFromTemplate = { navController.navigate(Screen.CreateNote.route) }
             )
         }
 

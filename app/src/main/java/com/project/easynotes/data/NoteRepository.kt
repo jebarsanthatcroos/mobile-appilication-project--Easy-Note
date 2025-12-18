@@ -5,7 +5,12 @@ import kotlinx.coroutines.flow.Flow
 class NoteRepository(private val noteDao: NoteDao) {
     fun getAllNotes(): Flow<List<Note>> = noteDao.getAllNotes()
 
+    fun getNotesByCategory(category: NoteCategory): Flow<List<Note>> =
+        noteDao.getNotesByCategory(category)
+
     fun searchNotes(query: String): Flow<List<Note>> = noteDao.searchNotes(query)
+
+    fun getNotesWithReminders(): Flow<List<Note>> = noteDao.getNotesWithReminders()
 
     suspend fun getNoteById(id: Int): Note? = noteDao.getNoteById(id)
 
@@ -15,4 +20,3 @@ class NoteRepository(private val noteDao: NoteDao) {
 
     suspend fun deleteNote(note: Note) = noteDao.deleteNote(note)
 }
-

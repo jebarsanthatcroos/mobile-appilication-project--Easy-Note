@@ -1,14 +1,19 @@
 package com.project.easynotes.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.project.easynotes.data.Note
+import com.project.easynotes.data.NoteCategory
 import com.project.easynotes.viewmodel.NotesViewModel
 import kotlinx.coroutines.launch
 
@@ -21,7 +26,8 @@ fun CreateEditNoteScreen(
 ) {
     var title by remember { mutableStateOf("") }
     var content by remember { mutableStateOf("") }
-    var tag by remember { mutableStateOf("") }
+    var selectedCategory by remember { mutableStateOf(NoteCategory.PERSONAL) }
+    var showCategoryMenu by remember { mutableStateOf(false) }
     var existingNote by remember { mutableStateOf<Note?>(null) }
     val scope = rememberCoroutineScope()
 
@@ -31,7 +37,7 @@ fun CreateEditNoteScreen(
             existingNote?.let { note ->
                 title = note.title
                 content = note.content
-                tag = note.tag
+                selectedCategory = note.category
             }
         }
     }
@@ -54,7 +60,7 @@ fun CreateEditNoteScreen(
                                         Note(
                                             title = title,
                                             content = content,
-                                            tag = tag
+                                            category = selectedCategory
                                         )
                                     )
                                 } else {
@@ -63,7 +69,7 @@ fun CreateEditNoteScreen(
                                             note.copy(
                                                 title = title,
                                                 content = content,
-                                                tag = tag
+                                                category = selectedCategory
                                             )
                                         )
                                     }
@@ -74,7 +80,13 @@ fun CreateEditNoteScreen(
                     ) {
                         Icon(Icons.Default.Save, "Save")
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+                    actionIconContentColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
         }
     ) { padding ->
@@ -95,13 +107,56 @@ fun CreateEditNoteScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedTextField(
-                value = tag,
-                onValueChange = { tag = it },
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("Tag (optional)") },
-                singleLine = true
-            )
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Category:", style = MaterialTheme.typography.bodyMedium)
+
+                Box {
+                    AssistChip(
+                        onClick = { showCategoryMenu = true },
+                        label = { Text(selectedCategory.displayName) },
+                        leadingIcon = {
+                            Box(
+                                modifier = Modifier
+                                    .size(16.dp)
+                                    .clip(CircleShape)
+                                    .background(Color(selectedCategory.color))
+                            )
+                        }
+                    )
+
+                    DropdownMenu(
+                        expanded = showCategoryMenu,
+                        onDismissRequest = { showCategoryMenu = false }
+                    ) {
+                        NoteCategory.values().forEach { category ->
+                            DropdownMenuItem(
+                                text = {
+                                    Row(
+                                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Box(
+                                            modifier = Modifier
+                                                .size(16.dp)
+                                                .clip(CircleShape)
+                                                .background(Color(category.color))
+                                        )
+                                        Text(category.displayName)
+                                    }
+                                },
+                                onClick = {
+                                    selectedCategory = category
+                                    showCategoryMenu = false
+                                }
+                            )
+                        }
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -111,9 +166,10 @@ fun CreateEditNoteScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
-                placeholder = { Text("Start typing...") },
+                placeholder = { Text("Start typing your note...") },
                 textStyle = MaterialTheme.typography.bodyLarge
             )
         }
     }
 }
+
