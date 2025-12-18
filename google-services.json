@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "9200244428",
+    "project_id": "mini-project-5f61f",
+    "storage_bucket": "mini-project-5f61f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9200244428:android:5078951b60210bd5825469",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3i3pyxqr_ExTSrYJCAqKScUxwPgzVLFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9200244428:android:15ad9119b0170f83825469",
+        "android_client_info": {
+          "package_name": "com.project.easynotes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3i3pyxqr_ExTSrYJCAqKScUxwPgzVLFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

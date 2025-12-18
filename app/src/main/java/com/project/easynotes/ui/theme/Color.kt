@@ -2,10 +2,17 @@ package com.project.easynotes.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val SoftBlue = Color(0xFFA8D5BA)
+val MintGreen = Color(0xFFBEE3DB)
+val SoftYellow = Color(0xFFFFF4B2)
+val DarkBlue = Color(0xFF7FB7A4)
+val DarkGreen = Color(0xFF89CDA8)
+val DarkYellow = Color(0xFFF7E890)
+val PersonalPink = Color(0xFFFFD6E8)
+val ProjectsPurple = Color(0xFFE0BBE4)
+val BackgroundWhite = Color(0xFFFFFFFF)
+val BackgroundGray = Color(0xFFF5F5F5)
+val TextPrimary = Color(0xFF2D3436)
+val TextSecondary = Color(0xFF636E72)
+
