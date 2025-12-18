@@ -11,14 +11,14 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
-        mavenCentral()
+        google()        // Required for Firebase & Compose
+        mavenCentral()  // Required for other dependencies
     }
 }
 
-rootProject.name = "Easy Notes"
+rootProject.name = "EasyNotes"
 include(":app")
- 
